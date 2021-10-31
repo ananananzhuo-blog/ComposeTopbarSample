@@ -51,7 +51,7 @@ fun Greeting(name: String) {
 
     Scaffold(topBar = {
         Column {
-            Spacer(
+            Spacer(//这里加一个Spacer用来设置距离顶部的边距
                 modifier = Modifier
                     .statusBarsHeight()
                     .fillMaxWidth()
@@ -85,11 +85,11 @@ fun Greeting(name: String) {
                     Text(text = "我的")
 
                 }
-                Spacer(modifier = Modifier.navigationBarsHeight())
+                Spacer(modifier = Modifier.navigationBarsHeight())//BottomBar距离底部的距离
             }
         }
     ) {padding->
-        LazyColumn(Modifier.padding(bottom = padding.calculateBottomPadding())) {
+        LazyColumn(Modifier.padding(bottom = padding.calculateBottomPadding())) {//bottom = padding.calculateBottomPadding()用来设置距离内容部分距离底部的Jul李，避免内容部分底部被遮挡
             items(30) { index ->
                 Box(
                     modifier = Modifier
