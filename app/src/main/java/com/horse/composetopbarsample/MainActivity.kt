@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -58,14 +59,14 @@ fun Greeting(name: String) {
             TopAppBar(
                 backgroundColor = statusbarColor,
                 title = {
-                Text("标题",style = TextStyle(color = Color.White))
-            }, navigationIcon = {
-                IconButton(onClick = {
+                    Text("标题", style = TextStyle(color = Color.White))
+                }, navigationIcon = {
+                    IconButton(onClick = {
 
-                }) {
-                    Icon(Icons.Filled.ArrowBack, "",tint = Color.White)
-                }
-            })
+                    }) {
+                        Icon(Icons.Filled.ArrowBack, "", tint = Color.White)
+                    }
+                })
         }
     },
         bottomBar = {
@@ -87,8 +88,22 @@ fun Greeting(name: String) {
                 Spacer(modifier = Modifier.navigationBarsHeight())
             }
         }
-    ) {
-        Text(text = "哈哈啊")
+    ) {padding->
+        LazyColumn(Modifier.padding(bottom = padding.calculateBottomPadding())) {
+            items(30) { index ->
+                Box(
+                    modifier = Modifier
+                        .padding(top = 10.dp)
+                        .fillMaxWidth()
+                        .height(50.dp)
+                        .background(Color.Green),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(text = index.toString())
+                }
+            }
+        }
+
     }
 
 }

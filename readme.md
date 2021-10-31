@@ -95,10 +95,7 @@ bottomBar = {
 结论是经过我们的处理后解决了底部导航栏的遮挡问题
 ### 状态栏和底部导航栏颜色的处理
 
-### 整体效果
-我们发现状态栏和底部导航栏的颜色都变了
 
-![](https://files.mdnice.com/user/15648/9661d25e-7542-4281-a998-257b2e23cb3a.png)
 
 
 ### 状态栏和底部导航栏颜色设置
@@ -117,3 +114,67 @@ bottomBar = {
                     setNavigationBarColor(statusbarColor, false)
                 }
 ```
+### 整体效果
+我们发现状态栏和底部导航栏的颜色都变了
+
+
+![](https://files.mdnice.com/user/15648/a704a10b-68e8-4d3a-90c0-ca2c529e0c7c.png)
+
+## 如何处理内容部分超出底部导航栏的区域
+使用`WindowCompat.setDecorFitsSystemWindows(window, false)`处理了页面后，Scafoold的内容区域也会被顶到底部导航栏的下方，同样也需要我们处理
+
+以下是处理前和处理后的代码和效果
+
+### 处理前
+#### 代码
+
+```kt
+LazyColumn() {
+            items(30) { index ->
+                Box(
+                    modifier = Modifier
+                        .padding(top = 10.dp)
+                        .fillMaxWidth()
+                        .height(50.dp)
+                        .background(Color.Green),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(text = index.toString())
+                }
+            }
+        }
+```
+
+#### 效果
+这里只展示到第27个item，第28、29个item没有展示出来，所以需要处理才行
+![](https://files.mdnice.com/user/15648/bf687e33-e1a9-4f40-ab2f-bf73648379d5.png)
+
+### 处理后
+#### 代码
+
+```kt
+ {padding->
+        LazyColumn(Modifier.padding(bottom = padding.calculateBottomPadding())) {//这里会计算出距离底部的距离，然后设置距离底部的padding
+            items(30) { index ->
+                Box(
+                    modifier = Modifier
+                        .padding(top = 10.dp)
+                        .fillMaxWidth()
+                        .height(50.dp)
+                        .background(Color.Green),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(text = index.toString())
+                }
+            }
+        }
+
+    }
+```
+#### 效果
+改正后的第29个item展示了出来
+![](https://files.mdnice.com/user/15648/3e222ce2-45c2-4660-b80e-94cb0c71d5e1.png)
+
+
+
+> 代码：https://github.com/ananananzhuo-blog/ComposeTopbarSample
